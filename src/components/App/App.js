@@ -4,6 +4,7 @@ import './App.css';
 import Header from "../Header/Header";
 import SearchForm from "../SearchForm/SearchForm";
 import Maim from "../Main/Main";
+import About from "../About/About";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
          <Header routePathStart={'/'} routePathNews={'/saved-news'}/>
          <SearchForm />
          <Maim />
+         <About />
       </Route>
 
       <Route path="/saved-news">  {/*отображается страница «Сохранённые статьи»*/}

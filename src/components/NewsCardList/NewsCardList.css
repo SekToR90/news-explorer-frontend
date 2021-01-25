@@ -1,10 +1,46 @@
 .elements {
     max-width: 1232px;
+    margin: 0 auto;
+    border-radius: 10px;
+
+}
+
+.elements__title {
+    margin: 0 0 64px 0;
+    font-family: Roboto Slab, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 46px;
+    color: #1A1B22;
+}
+
+.cards {
     display: grid;
     grid-template-columns: repeat(auto-fit,minmax(400px,1fr));
-    grid-template-rows: repeat(2,1fr);
     grid-gap: 16px;
-    margin: 64px auto;
-    border-radius: 10px;
     justify-items: center;
+}
+
+.elements__card-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 288px;
+    height: 64px;
+    margin: 64px auto 0;
+    background: #FFFFFF;
+    border-radius: 80px;
+    border: none;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #1A1B22;
+}
+
+.elements__card-add:hover {
+    cursor: pointer;
+    opacity: 0.9;
 }

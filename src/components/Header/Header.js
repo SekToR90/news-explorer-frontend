@@ -5,7 +5,7 @@ import headerImage from "../../images/header-image.svg"
 
 function Header(props) {
     const location = useLocation();
-    console.log(location);
+
     return (
         <header className="header">
             <p className="header__logo">NewsExplorer</p>
