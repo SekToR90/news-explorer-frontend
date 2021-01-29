@@ -21,16 +21,16 @@
     flex-direction: column;
     max-width: 600px;
     margin-top: 131px;
+}
+
+.about-me__title {
+    margin: 0 0 24px;
     font-family: Roboto Slab, ‘Arial’, sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 40px;
     line-height: 46px;
     color: #1A1B22;
-}
-
-.about-me__title {
-    margin: 0 0 24px;
 }
 
 .about-me__subtitle {
