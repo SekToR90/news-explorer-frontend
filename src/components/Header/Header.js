@@ -6,7 +6,6 @@ import headerImageArticles from "../../images/header-image-articles.svg"
 
 function Header(props) {
     const location = useLocation();
-    console.log(props.loggedIn )
 
     const headerLinkMain = `${location.pathname === '/' ? 'header__link_active': 'header__link_inactive'}`
     const headerImageBlack = `${location.pathname === '/' ? `${headerImageMain}` : `${headerImageArticles}`}`

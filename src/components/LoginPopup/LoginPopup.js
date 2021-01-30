@@ -30,10 +30,11 @@ function LoginPopup (props) {
 
     function handleSubmit(evt) {
         // Запрещаем браузеру переходить по адресу формы
-        evt.preventDefault();
-        props.closeLoginPopup() //Временное решение авторизации, удалить
+        // evt.preventDefault();
+        props.handleLogin() //Временное решение авторизации, переделать
 
         resetAllInput();
+        props.onClose(); //удалить
     }
 
     return (

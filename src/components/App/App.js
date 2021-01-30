@@ -17,14 +17,31 @@ function App() {
     const handleLoginPopupClick = () => {
         setIsLoginPopupOpen(true);
     }
-    const closeLoginPopup = () => {
-        setIsLoginPopupOpen(false);
 
-        setLoggedIn(true); //Временное решение авторизации
+    const closeAllPopup = () => {
+        setIsLoginPopupOpen(false);
     }
-    //
+
+    function keydownEscape (evt){ // Доделать!!
+        if(evt.key === 'Escape') {
+            closeAllPopup();
+        }
+    }
+
+   //
+
+    //Закрытие попапов по нажатию на клавишу
+    React.useEffect(() =>{
+        window.addEventListener('keydown', keydownEscape);
+
+       window.removeEventListener('keydown', keydownEscape);
+    })
 
     //Блоки регистрации и авторизации
+    const handleLogin = () => {
+        setLoggedIn(true); //Временное решение авторизации
+    }
+
     const handleLogout = () => { // Удаляем токен и обнуляем стейты
         setLoggedIn(false);
     }
@@ -56,9 +73,10 @@ function App() {
         <Footer routePathStart={'/'}/>
 
         <LoginPopup isOpen={isLoginPopupOpen}
-                    onClose={closeLoginPopup}
+                    onClose={closeAllPopup}
                     setLoggedIn={setLoggedIn}
-                    closeLoginPopup={closeLoginPopup}/>
+                    handleLogin={handleLogin}
+                    />
     </div>
   );
 }

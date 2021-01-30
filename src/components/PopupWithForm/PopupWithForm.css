@@ -40,6 +40,10 @@
     border: none;
 }
 
+.modal__close-button:focus {
+    outline: none;
+}
+
 .modal__title {
     margin: 0 0 22px;
     font-family: Roboto, ‘Arial’, sans-serif;
@@ -74,9 +78,17 @@
     color: #FFFFFF;;
 }
 
+.modal__button-save:focus {
+    outline: none;
+}
+
 .modal__button-save_disabled {
     background: #E6E8EB;
     color: #B6BCBF;
+}
+
+.modal__button-save_error {
+    margin: 0;
 }
 
 .modal__subtitle {
@@ -100,4 +112,14 @@
     background: transparent;
     border: none;
     color: #2F71E5;
+}
+
+.modal__button-error_visible {
+    margin: 17px auto 8px;
+    font-family: Inter, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #FF0000;
 }
