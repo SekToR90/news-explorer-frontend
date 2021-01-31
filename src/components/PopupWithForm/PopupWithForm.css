@@ -25,10 +25,22 @@
     position: relative;
     max-width: 430px;
     background: #FFFFFF;
-    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
     border-radius: 16px;
     padding: 34px 36px 28px;
     box-sizing: border-box;
+}
+
+.modal__container_info {
+    padding: 43px 0 51px 36px;
+}
+
+.modal__shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+    height: 100%;
+    width: 100%;
 }
 
 .modal__close-button {
@@ -52,6 +64,10 @@
     font-size: 24px;
     line-height: 28px;
     color: #1A1B22;
+}
+
+.modal__title_info {
+    margin-bottom: 14px;
 }
 
 .modal__field {
@@ -112,6 +128,16 @@
     background: transparent;
     border: none;
     color: #2F71E5;
+}
+
+.modal__button-switch:focus {
+    outline: none;
+}
+
+.modal__button-switch_info {
+    font-size: 18px;
+    line-height: 22px;
+    text-align: left;
 }
 
 .modal__button-error_visible {

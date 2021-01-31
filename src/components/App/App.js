@@ -7,9 +7,13 @@ import Maim from "../Main/Main";
 import About from "../About/About";
 import Footer from "../Footer/Footer";
 import LoginPopup from "../LoginPopup/LoginPopup";
+import RegisterPopup from "../RegisterPopup/RegisterPopup";
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 
 function App() {
     const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
+    const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
+    const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
 
     const [loggedIn, setLoggedIn] = React.useState(false) //Временное решение авторизации
 
@@ -18,24 +22,43 @@ function App() {
         setIsLoginPopupOpen(true);
     }
 
+    const handleRegisterPopupClick = () => {
+        setIsRegisterPopupOpen(true);
+    }
+
+    const handleInfoTooltipPopupClick = () => {
+        setIsInfoTooltipPopupOpen(true);
+    }
+
     const closeAllPopup = () => {
         setIsLoginPopupOpen(false);
+        setIsRegisterPopupOpen(false);
+        setIsInfoTooltipPopupOpen(false);
     }
 
-    function keydownEscape (evt){ // Доделать!!
+    function keydownEscape (evt){
         if(evt.key === 'Escape') {
             closeAllPopup();
+            window.removeEventListener('keydown', keydownEscape);
         }
     }
+    //
 
-   //
+    //функция смены попапов
+    function handleChangePopup() {
+        if (isLoginPopupOpen) {
+            handleRegisterPopupClick();
+        } else if (isRegisterPopupOpen) {
+            handleLoginPopupClick();
+        } else if (isInfoTooltipPopupOpen) {
+            handleLoginPopupClick();
+        }
+    }
 
     //Закрытие попапов по нажатию на клавишу
     React.useEffect(() =>{
         window.addEventListener('keydown', keydownEscape);
-
-       window.removeEventListener('keydown', keydownEscape);
-    })
+    });
 
     //Блоки регистрации и авторизации
     const handleLogin = () => {
@@ -76,7 +99,19 @@ function App() {
                     onClose={closeAllPopup}
                     setLoggedIn={setLoggedIn}
                     handleLogin={handleLogin}
+                    openNewPopup={handleChangePopup}
                     />
+
+        <RegisterPopup isOpen={isRegisterPopupOpen}
+                       onClose={closeAllPopup}
+                       openNewPopup={handleChangePopup}
+                       openInfoTooltipPopup={handleInfoTooltipPopupClick}
+        />
+
+        < InfoTooltip isOpen={isInfoTooltipPopupOpen}
+                      onClose={closeAllPopup}
+                      openNewPopup={handleChangePopup}
+        />
     </div>
   );
 }

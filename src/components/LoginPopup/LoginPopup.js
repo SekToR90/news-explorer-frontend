@@ -45,6 +45,7 @@ function LoginPopup (props) {
                        isOpen={props.isOpen ? 'modal_open' : ''}
                        onSubmit={handleSubmit}
                        onClose ={props.onClose}
+                       openNewPopup={props.openNewPopup}
                        submitIsValid={!emailIsValid || !passwordIsValid}
                        children={
             <>
