@@ -80,7 +80,6 @@
 .modal__button-save {
     margin-top: 39px;
     border: none;
-    background: #2F71E5;
     box-shadow: 0 5px 15px rgba(14, 26, 57, 0.2);
     border-radius: 100px;
     width: 360px;
@@ -95,8 +94,23 @@
 }
 
 .modal__button-save:focus {
-    outline: none;
+     outline: none;
+ }
+
+.modal__button-save_active {
+    background: #2F71E5;
 }
+
+.modal__button-save_active:hover {
+    cursor: pointer;
+    background: #347EFF;
+}
+
+.modal__button-save_active:active {
+    cursor: pointer;
+    background: #2A65CC;
+}
+
 
 .modal__button-save_disabled {
     background: #E6E8EB;
@@ -133,6 +147,17 @@
 .modal__button-switch:focus {
     outline: none;
 }
+
+.modal__button-switch:hover {
+    cursor: pointer;
+    color: #347EFF;
+}
+
+.modal__button-switch:active {
+    cursor: pointer;
+    color: #2A65CC;
+}
+
 
 .modal__button-switch_info {
     font-size: 18px;

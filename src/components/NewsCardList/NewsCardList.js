@@ -3,7 +3,7 @@ import NewsCard from "../NewsCard/NewsCard";
 
 import articles from '../../utils/articles'
 
-function NewsCardList() {
+function NewsCardList(props) {
     const [isCardNumber, setIsCardNumber] = React.useState([]);
 
     React.useEffect(() => {
@@ -19,7 +19,7 @@ function NewsCardList() {
             <h2 className='elements__title'>Результаты поиска</h2>
             <div className='cards'>
                 {isCardNumber.map((item) => (
-                    <NewsCard {... item} />))}
+                    <NewsCard {... item} loggedIn={props.loggedIn} />))}
             </div>
             <button type='button' className='elements__card-add' onClick={handleClick}>Показать еще</button>
         </section>

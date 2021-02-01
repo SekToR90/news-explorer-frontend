@@ -80,6 +80,10 @@
     opacity: 0.9;
 }
 
+.header__button:hover {
+    cursor: pointer;
+}
+
 .header__button_black {
     color: #1A1B22;
     border-color: #1A1B22;

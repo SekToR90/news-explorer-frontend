@@ -22,7 +22,7 @@ function PopupWithForm (props) {
     }//
 
     const errorServerClassButton = `${errorServer ? 'modal__button-save_error': ''}`; //Поправить на 3 этапе
-    const buttonNoValid = `${props.submitIsValid ? 'modal__button-save_disabled' : '' }`;
+    const buttonNoValid = `${props.submitIsValid ? 'modal__button-save_disabled' : 'modal__button-save_active' }`;
     const infoTooltip = `${props.name === "info" ? `_${props.name}` : '' }`;
 
     function changePopup() {

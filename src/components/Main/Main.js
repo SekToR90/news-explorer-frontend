@@ -3,10 +3,12 @@ import NewsCardList from "../NewsCardList/NewsCardList";
 
 
 
-function Maim() {
+function Maim(props) {
+
+
     return (
         <main className="main">
-            <NewsCardList/>
+            <NewsCardList loggedIn={props.loggedIn}/>
         </main>
     );
 }

@@ -15,7 +15,12 @@ function App() {
     const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
     const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
 
+    const [queryIn, setQueryIn] = React.useState(false); //флаг запроса новости, переделать на 3 этапе
     const [loggedIn, setLoggedIn] = React.useState(false) //Временное решение авторизации
+
+    const handleQueryInClick = () => {
+        setQueryIn(true);
+    }
 
     //Обработчики событий открытия/закрытия модалок
     const handleLoginPopupClick = () => {
@@ -80,8 +85,10 @@ function App() {
                  loggedIn={loggedIn}
                  handleLogout ={handleLogout}
          />
-         <SearchForm />
-         <Maim />
+         <SearchForm handleQueryInClick={handleQueryInClick}/>
+         <Maim  queryIn={queryIn}
+                loggedIn={loggedIn}
+         />
          <About />
       </Route>
 

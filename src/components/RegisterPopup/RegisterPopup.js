@@ -38,6 +38,7 @@ function RegisterPopup (props) {
     }
 
     function handleSubmit(evt) {
+        evt.preventDefault();
         resetAllInput();
         props.onClose(); //удалить
         props.openInfoTooltipPopup()
@@ -62,7 +63,7 @@ function RegisterPopup (props) {
 
                                <p className='modal-title  modal-title-password'>Пароль</p>
                                <input type="password" name="password" className="modal__input"
-                                      placeholder="Введите пароль" required autoComplete="off" value={password} onChange={handlePasswordChange}/>
+                                      placeholder="Введите пароль" required autoComplete="off" value={password} minLength={8} onChange={handlePasswordChange}/>
                                <span className={`modal__error ${!passwordIsValid ? 'modal__error_visible' : '' }`} id="urlAvatar-error">{passwordErrorMessage}</span>
 
                                <p className='modal-title  modal-title-name'>Имя</p>

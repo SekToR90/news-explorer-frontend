@@ -8,6 +8,7 @@
     background: #FFFFFF;
     border-radius: 10px;
 }
+
 .card__button-container{
     position: absolute;
     top: 24px;
@@ -34,18 +35,31 @@
     background-image: url("../../images/news-save-button.svg");
     background-repeat: no-repeat;
     background-position: center;
-
-
     width: 40px;
     height: 40px;
-    /*background: #FFFFFF;*/
     border-radius: 8px;
     border: none;
 }
 
+.card__save-button:focus {
+    outline: none;
+}
+
 .card__save-button:hover {
     cursor: pointer;
+    background-image: url("../../images/news-save-button-hover.svg");
+}
+
+.card__save-button.card__save-button_active {
     background-image: url("../../images/news-save-button-active.svg");
+}
+
+.card__save-button_active:hover {
+    cursor: pointer;
+}
+
+.card__save-button_not-logged:hover {
+    cursor: pointer;
 }
 
 .card__group {
