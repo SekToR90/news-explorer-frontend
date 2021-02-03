@@ -44,3 +44,7 @@
     cursor: pointer;
     opacity: 0.9;
 }
+
+.elements__card-add:focus {
+    outline: none;
+}

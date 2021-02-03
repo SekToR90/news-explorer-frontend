@@ -1,0 +1,11 @@
+.saved-news {
+    background: #F5F6F7;
+    padding-top: 62px;
+    padding-bottom: 80px;
+}
+
+.saved-news__container {
+    max-width: 1232px;
+    margin: 0 auto;
+    border-radius: 10px;
+}

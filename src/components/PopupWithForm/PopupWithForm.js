@@ -6,15 +6,15 @@ function PopupWithForm (props) {
     const [errorServer , setErrorServer ] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState('')
 
-    function serverErrorEnabled () {
+    function serverErrorEnabled (evt) {
+        evt.preventDefault();
         setErrorServer(true);
         setErrorMessage('Такой пользователь уже есть')
 
-        return setTimeout(serverErrorDisabled, 4000)
+        return setTimeout(serverErrorDisabled, 3000)
     }
 
     function serverErrorDisabled () {
-
         setErrorServer(false);
         setErrorMessage('')
 

@@ -10,13 +10,48 @@
 }
 
 .card__button-container{
+    width: calc(100% - 48px);
     position: absolute;
     top: 24px;
     right: 24px;
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
-.card__button-text{
+.card__button-save+.card__button-text {
+    display: none;
+}
+
+.card__button-save {
+    background-image: url("../../images/news-save-button.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card__button-save:focus {
+    outline: none;
+}
+
+.card__button-save:hover {
+    cursor: pointer;
+    background-image: url("../../images/news-save-button-hover.svg");
+}
+
+.card__button-save.card__button-save_active {
+    background-image: url("../../images/news-save-button-active.svg");
+}
+
+.card__button-save_active:hover {
+    cursor: pointer;
+}
+
+.card__button-save:hover+.card__button-text {
+    display: block;
     margin: 0 5px 0 0;
     padding: 14px 0;
     width: 182px;
@@ -31,8 +66,13 @@
     text-align: center;
 }
 
-.card__save-button {
-    background-image: url("../../images/news-save-button.svg");
+.card__delete-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.card__delete-button {
+    background-image: url("../../images/icon-delete.svg");
     background-repeat: no-repeat;
     background-position: center;
     width: 40px;
@@ -41,25 +81,49 @@
     border: none;
 }
 
-.card__save-button:focus {
+.card__delete-button:focus {
     outline: none;
 }
 
-.card__save-button:hover {
+.card__delete-button:hover {
     cursor: pointer;
-    background-image: url("../../images/news-save-button-hover.svg");
+    background-image: url("../../images/icon-delete-hover.svg");
 }
 
-.card__save-button.card__save-button_active {
-    background-image: url("../../images/news-save-button-active.svg");
+.card__delete-button+.card__button-text {
+    display: none;
 }
 
-.card__save-button_active:hover {
-    cursor: pointer;
+.card__delete-button:hover+.card__button-text {
+    display: block;
+    margin: 0 5px 0 0;
+    padding: 14px 0;
+    width: 159px;
+    height: 12px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+    text-align: center;
 }
 
-.card__save-button_not-logged:hover {
-    cursor: pointer;
+.card__keyword{
+    margin: 0;
+    padding: 8px;
+    width: 88px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
 }
 
 .card__group {
