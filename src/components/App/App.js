@@ -16,6 +16,7 @@ function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+  const [isNavigationPopupOpen, setIsNavigationPopupOpen] = React.useState(false);
 
   const [loggedIn, setLoggedIn] = React.useState(false); //Временное решение авторизации
 
@@ -33,16 +34,16 @@ function App() {
     setTimeout(startNotFoundPreloader, 3000);
   };
 
+  // отрисовываем прелоудер "ничего не найдено" , переделать на 3 этапе
   const startNotFoundPreloader = () => {
-    // отрисовываем прелоудер "ничего не найдено" , переделать на 3 этапе
     setIsSearchPreloader(false);
     setIsNotFoundPreloader(true);
 
     setTimeout(startNewsCardList, 3000);
   };
 
+  // отрисовываем блок с карточками , переделать на 3 этапе
   const startNewsCardList = () => {
-    // отрисовываем блок с карточками , переделать на 3 этапе
     setIsNotFoundPreloader(false);
     setIsNewsCardList(true);
   };
@@ -58,6 +59,13 @@ function App() {
 
   const handleInfoTooltipPopupClick = () => {
     setIsInfoTooltipPopupOpen(true);
+  };
+
+  const handleNavigationPopupClick = () => {
+    if (!isNavigationPopupOpen) {
+      return setIsNavigationPopupOpen(true);
+    }
+    setIsNavigationPopupOpen(false);
   };
 
   const closeAllPopup = () => {
@@ -104,14 +112,14 @@ function App() {
   return (
     <div className="App">
       <Route exact path="/">
-        {' '}
-        {/*отображается главная страница проекта*/}
         <Header
           routePathStart={'/'}
           routePathNews={'/saved-news'}
           handleLoginPopupClick={handleLoginPopupClick}
           loggedIn={loggedIn}
           handleLogout={handleLogout}
+          handleNavigationPopupClick={handleNavigationPopupClick}
+          isOpen={isNavigationPopupOpen}
         />
         <SearchForm handleQueryInClick={handleQueryInClick} />
         {queryIn ? ( // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе
@@ -126,7 +134,14 @@ function App() {
       </Route>
 
       <Route path="/saved-news">
-        <Header routePathStart={'/'} routePathNews={'/saved-news'} loggedIn={loggedIn} handleLogout={handleLogout} />
+        <Header
+          routePathStart={'/'}
+          routePathNews={'/saved-news'}
+          loggedIn={loggedIn}
+          handleLogout={handleLogout}
+          handleNavigationPopupClick={handleNavigationPopupClick}
+          isOpen={isNavigationPopupOpen}
+        />
         <SavedNewsHeader />
         <SavedNews loggedIn={loggedIn} />
       </Route>

@@ -50,3 +50,92 @@
     width: 20px;
     height: 20px;
 }
+
+@media screen and (max-width: 768px) {
+    .footer {
+        max-width: 1232px;
+        margin: 24px 21px 16px 40px;
+    }
+
+
+    .footer__container {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+    }
+
+    .footer__link-main {
+        width: 88px;
+    }
+
+    .footer__link-yandex {
+        width: 176px;
+        margin-right: 25px;
+    }
+
+    .footer__link-git {
+        margin-right: 27px;
+    }
+
+    .footer__image {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    /*.footer {*/
+    /*    display: flex;*/
+    /*    flex-direction: column-reverse;*/
+    /*    max-width: 1232px;*/
+    /*    margin: 32px auto 26px;*/
+    /*}*/
+
+    /*.footer__logo {*/
+    /*    font-family: Roboto, ‘Arial’, sans-serif;*/
+    /*    font-style: normal;*/
+    /*    font-weight: normal;*/
+    /*    font-size: 16px;*/
+    /*    line-height: 22px;*/
+    /*    color: #B6BCBF;*/
+    /*    margin: 0;*/
+    /*}*/
+
+    /*.footer__container {*/
+    /*    list-style: none;*/
+    /*    display: flex;*/
+    /*    margin: 0;*/
+    /*    padding: 0;*/
+    /*}*/
+
+    /*.footer__link-main {*/
+    /*    width: 112px;*/
+    /*}*/
+
+    /*.footer__link-yandex {*/
+    /*    width: 192px;*/
+    /*    margin-right: 41px;*/
+    /*}*/
+
+    /*.footer__link-item{*/
+    /*    font-family: Roboto, ‘Arial’, sans-serif;*/
+    /*    font-style: normal;*/
+    /*    font-weight: normal;*/
+    /*    font-size: 18px;*/
+    /*    line-height: 24px;*/
+    /*    text-align: center;*/
+    /*    color: #1A1B22;*/
+    /*    text-decoration: none;*/
+    /*}*/
+
+    /*.footer__link-git {*/
+    /*    margin-right: 27px;*/
+    /*}*/
+
+    /*.footer__image {*/
+    /*    width: 20px;*/
+    /*    height: 20px;*/
+    /*}*/
+}

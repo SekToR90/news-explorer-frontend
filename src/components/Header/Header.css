@@ -8,14 +8,14 @@
     width: 100%;
     padding: 0;
     background: rgba(196, 196, 196, 0.01);
-    box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.2);
     z-index: 10;
 }
 
 .header__logo {
     margin: 0 0 0 104px;
     padding: 0;
-    color: #FFFFFF;
+
     font-family: Roboto Slab, ‘Arial’, sans-serif;
     font-style: normal;
     font-weight: bold;
@@ -25,6 +25,14 @@
 
 .header__logo_black {
     color: #1A1B22;
+}
+
+.header__logo_white {
+    color: #FFFFFF;
+}
+
+.header__burger-button {
+    display: none;
 }
 
 .header__link {
@@ -101,4 +109,105 @@
 }
 
 
+
+@media screen and (max-width: 768px) {
+    .header__logo {
+        margin: 0 0 0 40px;
+    }
+
+    .header__link {
+        margin-right: 16px;
+        font-size: 16px;
+        line-height: 62px;
+    }
+
+    .header__link_active {
+        border-bottom: 3px solid;
+        border-color: #FFFFFF;
+    }
+
+    .header__button {
+        margin: 14px 40px 12px 0;
+        width: 152px;
+        height: 40px;
+
+
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .header__button_articles {
+        justify-content: space-between;
+        padding: 0 15px 0;
+        width: 100px;
+    }
+}
+
+@media screen and (max-width: 593px) {
+    .header__black {
+        background: #1A1B22;
+    }
+
+    .header__logo {
+        margin: 0 0 0 16px;
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    .header__logo_black {
+        color: #1A1B22;
+    }
+
+    .header__burger-button{
+        background-repeat: no-repeat;
+        cursor: pointer;
+        display: inline;
+        width: 24px;
+        height: 24px;
+        margin: 16px 16px 16px 0;
+    }
+
+    .header__burger-button_menu {
+        background-image: url("../../images/header-icon-menu-white.svg");
+    }
+
+    .header__burger-button_close {
+        background-image: url("../../images/header-icon-close-white.svg");
+    }
+
+    .header__burger-button_menu-black {
+        background-image: url("../../images/header-icon-menu-black.svg");
+    }
+
+    .header__link-container {
+       margin: 16px auto 0;
+        display: flex;
+        flex-direction: column;
+        width: 288px;
+    }
+
+    .header__link {
+        font-family: Roboto, ‘Arial’, sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 76px;
+        text-align: left;
+        text-decoration: none;
+        color: #FFFFFF;
+    }
+
+    .header__link_active {
+        border: none;
+    }
+
+    .header__button {
+        margin: 22px auto 24px;
+        width: 288px;
+        height: 56px;
+        font-size: 18px;
+        line-height: 24px;
+        justify-content: center;
+    }
+}
 
