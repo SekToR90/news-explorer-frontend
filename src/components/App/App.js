@@ -25,6 +25,14 @@ function App() {
   const [isNotFoundPreloader, setIsNotFoundPreloader] = React.useState(false); //запускаем прелоудер "ничего не найдено", переделать на 3 этапе
   const [isNewsCardList, setIsNewsCardList] = React.useState(false); //запускаем отрисовку карточек, переделать на 3 этапе
 
+  //На разрешении 320px удаляем логотип и кнопку из блока Header
+  const [isClickButtonAuthenticate, setIsClickButtonAuthenticate] = React.useState(false);
+
+  function handleButtonAuthenticateClick() {
+    setIsClickButtonAuthenticate(true);
+  }
+  ///////////////////////////////////////////////
+
   const handleQueryInClick = () => {
     // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе
     setQueryIn(true);
@@ -51,6 +59,8 @@ function App() {
   //Обработчики событий открытия/закрытия модалок
   const handleLoginPopupClick = () => {
     setIsLoginPopupOpen(true);
+    setIsNavigationPopupOpen(false);
+    handleButtonAuthenticateClick();
   };
 
   const handleRegisterPopupClick = () => {
@@ -72,6 +82,7 @@ function App() {
     setIsLoginPopupOpen(false);
     setIsRegisterPopupOpen(false);
     setIsInfoTooltipPopupOpen(false);
+    setIsClickButtonAuthenticate(false);
   };
 
   function keydownEscape(evt) {
@@ -85,10 +96,13 @@ function App() {
   //функция смены попапов
   function handleChangePopup() {
     if (isLoginPopupOpen) {
+      handleButtonAuthenticateClick();
       handleRegisterPopupClick();
     } else if (isRegisterPopupOpen) {
+      handleButtonAuthenticateClick();
       handleLoginPopupClick();
     } else if (isInfoTooltipPopupOpen) {
+      handleButtonAuthenticateClick();
       handleLoginPopupClick();
     }
   }
@@ -120,6 +134,7 @@ function App() {
           handleLogout={handleLogout}
           handleNavigationPopupClick={handleNavigationPopupClick}
           isOpen={isNavigationPopupOpen}
+          clickAuthenticate={isClickButtonAuthenticate} //////////////////////////////////
         />
         <SearchForm handleQueryInClick={handleQueryInClick} />
         {queryIn ? ( // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе

@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    width: 400px;
     height: 576px;
     background: #FFFFFF;
     border-radius: 10px;
@@ -188,4 +187,63 @@
 .card__link {
     text-decoration: none;
     max-height: 272px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .card {
+        height: 420px;
+    }
+
+    .card__button-container{
+        top: 8px;
+        right: 8px;
+    }
+
+    /*.card__delete-button:hover+.card__button-text {*/
+    /*    */
+    /*}*/
+
+    /*.card__keyword{*/
+
+    /*}*/
+
+    .card__image {
+        max-width: 224px;
+        height: 150px;
+    }
+
+    .card__group-text {
+        width: 192px;
+        margin: 16px auto 0;
+    }
+
+    .card__title {
+        margin: 0 0 12px;
+        font-size: 22px;
+        line-height: 24px;
+    }
+
+    .card__subtitle {
+        margin: 0 0 10px;
+        white-space: pre;
+        overflow: hidden; /* Обрезаем всё за пределами блока */
+        text-overflow: ellipsis; /* Добавляем многоточие */
+    }
+
+    .card__author {
+        margin: 0 0 24px 24px;
+        font-family: Roboto Slab, ‘Arial’, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 16px;
+        line-height: 20px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: #B6BCBF;
+    }
+
+    .card__link {
+        max-height: 150px;
+    }
 }

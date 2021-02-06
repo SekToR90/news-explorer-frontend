@@ -1,5 +1,4 @@
 import React from 'react';
-import closeIcon from '../../images/clase-icon.svg';
 
 function PopupWithForm(props) {
   // временное решение ошибки сервера
@@ -34,9 +33,9 @@ function PopupWithForm(props) {
     <div className={`modal modal_${props.name} ${props.isOpen}`}>
       <div className="modal__shadow" onClick={props.onClose} />
       <div className={`modal__container modal__container${infoTooltip}`}>
-        <button type="button" className="modal__close-button" onClick={props.onClose}>
-          <img className="modal__close" src={closeIcon} alt="Кнопка_выхода" />
-        </button>
+        <div type="button" className="modal__close-button" onClick={props.onClose}>
+          <div className="modal__close" />
+        </div>
         <h2 className={`modal__title modal__title${infoTooltip}`}>{props.title}</h2>
         {props.name !== 'info' ? (
           <>

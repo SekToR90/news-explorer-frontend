@@ -25,7 +25,13 @@ function Header(props) {
 
   return (
     <header className={`header ${headerBlack}`}>
-      <p className={`header__logo ${headerLogoBlack} ${headerMenuLogoBlack}`}>NewsExplorer</p>
+      <p
+        className={`header__logo ${headerLogoBlack} ${headerMenuLogoBlack} ${
+          props.clickAuthenticate ? 'header__logo_none' : ''
+        }`}
+      >
+        NewsExplorer
+      </p>
       {location.pathname === '/saved-news' ? (
         <div
           className={`header__burger-button ${
@@ -35,7 +41,7 @@ function Header(props) {
         />
       ) : (
         <div
-          className={`header__burger-button ${
+          className={`header__burger-button ${props.clickAuthenticate ? 'header__burger-button_none' : ''} ${
             props.isOpen ? 'header__burger-button_close' : 'header__burger-button_menu'
           }`}
           onClick={handleMenuClick}
@@ -47,14 +53,12 @@ function Header(props) {
           <>
             {props.loggedIn ? (
               <>
-                <div className="header__link-container">
-                  <Link to={props.routePathStart} className={`header__link ${headerLinkMain} ${headerLinkBlack}`}>
-                    Главная
-                  </Link>
-                  <Link to={props.routePathNews} className={`header__link ${headerLinkArticles} ${headerLinkBlack}`}>
-                    Сохранённые статьи
-                  </Link>
-                </div>
+                <Link to={props.routePathStart} className={`header__link ${headerLinkMain} ${headerLinkBlack}`}>
+                  Главная
+                </Link>
+                <Link to={props.routePathNews} className={`header__link ${headerLinkArticles} ${headerLinkBlack}`}>
+                  Сохранённые статьи
+                </Link>
 
                 <button
                   className={`header__button header__button_articles ${headerButtonBlack}`}
@@ -65,11 +69,9 @@ function Header(props) {
               </>
             ) : (
               <>
-                <div className="header__link-container">
-                  <Link to={props.routePathStart} className={`header__link header__link_active ${headerLinkBlack}`}>
-                    Главная
-                  </Link>
-                </div>
+                <Link to={props.routePathStart} className={`header__link header__link_active ${headerLinkBlack}`}>
+                  Главная
+                </Link>
 
                 <button className="header__button" onClick={props.handleLoginPopupClick}>
                   Авторизоваться

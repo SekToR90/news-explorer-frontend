@@ -35,6 +35,9 @@ function RegisterPopup(props) {
   function resetAllInput() {
     setEmail('');
     setPassword('');
+    setEmailIsValid(false);
+    setPasswordIsValid(false);
+    setNameIsValid(false);
   }
 
   function handleSubmit(evt) {

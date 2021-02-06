@@ -3,6 +3,7 @@
     background-size: cover;
     position: relative;
     padding-bottom: 80px;
+    background-position: 50%;
 }
 
 .search__container {
