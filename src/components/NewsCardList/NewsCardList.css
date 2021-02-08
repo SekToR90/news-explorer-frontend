@@ -50,6 +50,10 @@
 
 
 @media screen and (max-width: 768px) {
+    .elements {
+        margin: 0 40px;
+    }
+
     .elements__title {
         margin: 0 0 32px 0;
         font-size: 30px;
@@ -57,12 +61,32 @@
     }
 
     .cards {
-        grid-template-columns: repeat(auto-fit,minmax(224px,1fr));
+        grid-template-columns: repeat(auto-fit,minmax(0, 224px));
         grid-gap: 8px;
     }
 
     .elements__card-add {
         width: 240px;
         margin: 22px auto 0;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .elements {
+        margin: 0 16px;
+    }
+
+    .elements__title {
+        margin: 0 0 24px 0;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fit,minmax(0,288px));
+        grid-gap: 10px;
+    }
+
+    .elements__card-add {
+        width: 288px;
+        margin: 15px auto 0;
     }
 }

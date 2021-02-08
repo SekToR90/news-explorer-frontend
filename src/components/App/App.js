@@ -134,7 +134,7 @@ function App() {
           handleLogout={handleLogout}
           handleNavigationPopupClick={handleNavigationPopupClick}
           isOpen={isNavigationPopupOpen}
-          clickAuthenticate={isClickButtonAuthenticate} //////////////////////////////////
+          clickAuthenticate={isClickButtonAuthenticate}
         />
         <SearchForm handleQueryInClick={handleQueryInClick} />
         {queryIn ? ( // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе

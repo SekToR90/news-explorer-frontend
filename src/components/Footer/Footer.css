@@ -70,10 +70,10 @@
     height: 20px;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     .footer {
         max-width: 1232px;
-        margin: 24px 21px 16px 40px;
+        margin: 21px 40px 21px 40px;
     }
 
 
@@ -86,6 +86,7 @@
 
     .footer__link-main {
         width: 88px;
+        text-align: center;
     }
 
     .footer__link-yandex {

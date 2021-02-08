@@ -18,13 +18,14 @@ function Header(props) {
   const headerLogoBlack = `${!props.isOpen && location.pathname === '/saved-news' ? 'header__logo_black' : ''}`;
   const headerLinkBlack = `${location.pathname === '/saved-news' ? 'header__link_black' : ''}`;
   const headerButtonBlack = `${!props.isOpen && location.pathname === '/saved-news' ? 'header__button_black' : ''}`;
+  const headerBoxShadow = `${location.pathname === '/saved-news' ? 'header-box_articles' : 'header-box_main'}`;
 
   function handleMenuClick() {
     props.handleNavigationPopupClick();
   }
 
   return (
-    <header className={`header ${headerBlack}`}>
+    <header className={`header ${headerBlack} ${headerBoxShadow}`}>
       <p
         className={`header__logo ${headerLogoBlack} ${headerMenuLogoBlack} ${
           props.clickAuthenticate ? 'header__logo_none' : ''

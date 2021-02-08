@@ -9,3 +9,9 @@
     margin: 0 auto;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    .saved-news__container {
+        margin: 0 16px;
+    }
+}

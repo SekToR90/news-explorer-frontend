@@ -10,3 +10,10 @@
         padding-bottom: 40px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .main {
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+}
