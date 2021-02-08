@@ -140,6 +140,10 @@
         text-align: left;
     }
 
+    .footer__link-main {
+        text-align: left;
+    }
+
     .footer__link-item{
         line-height: 48px;
         text-align: left;
