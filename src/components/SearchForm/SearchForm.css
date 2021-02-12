@@ -1,0 +1,191 @@
+.search {
+    background-image: url("../../images/georgia-de-lotz-unsplash.jpg");
+    background-size: cover;
+    position: relative;
+    padding-bottom: 80px;
+    background-position: 50%;
+}
+
+.search__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 608px;
+}
+
+.search__title {
+    margin: 160px 0 32px;
+    font-family: Roboto Slab, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    line-height: 64px;
+    color: #FFFFFF;
+}
+
+.search__subtitle{
+    margin: 0 0 64px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+
+.search__field {
+    position: relative;
+}
+
+.search__input {
+    width: 608px;
+    padding: 21px 170px 21px 24px;
+    background: #FFFFFF;
+    border: 1px solid #D1D2D6;
+    box-sizing: border-box;
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #1A1B22;
+}
+
+.search__input:focus {
+    outline: none;
+}
+
+.search__button {
+    position: absolute;
+    width: 168px;
+    height: 66px;
+    top: 0;
+    right: 0;
+    padding: 0;
+    background: #2f71e5;
+    box-shadow: 0 5px 15px rgba(14, 26, 57, 0.2);
+    border-radius: 100px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #FFFFFF;
+    border: none;
+}
+
+.search__button:focus {
+    outline: none;
+}
+
+.search__button:hover {
+    cursor: pointer;
+    background: #347EFF;
+}
+
+.search__button:active {
+    background: #2A65CC;
+}
+
+.search__error {
+    align-self: center;
+    font-family: Inter, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #FF0000;
+    display: block;
+    text-align: center;
+}
+
+
+@media screen and (max-width: 768px) {
+    .search {
+         padding-bottom: 48px;
+    }
+
+    .search__container {
+        max-width: 450px;
+    }
+
+    .search__title {
+        margin: 104px 0 16px;
+        padding-right: 65px;
+        font-size: 36px;
+        line-height: 40px;
+    }
+
+    .search__subtitle{
+        margin: 0 0 48px;
+    }
+
+    .search__input {
+        width: 448px;
+        padding: 17px 160px 17px 24px;
+        backdrop-filter: blur(100px);
+    }
+
+    .search__button {
+        width: 160px;
+        height: 58px;
+    }
+
+}
+
+@media screen and (max-width: 593px) {
+    .search {
+        padding-bottom: 32px;
+    }
+
+    .search__container {
+        max-width: 288px;
+    }
+
+    .search__title {
+        margin: 86px 0 16px;
+        padding: 0;
+        font-size: 36px;
+        line-height: 40px;
+    }
+
+    .search__subtitle{
+        margin: 0 0 122px;
+    }
+
+    .search__field {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .search__input {
+        width: 100%;
+        margin-bottom: 16px;
+        padding: 17px 0 17px 16px;
+    }
+
+
+    .search__button {
+        position: relative;
+        width: 100%;
+        height: 56px;
+    }
+
+    .search__error {
+        align-self: center;
+        font-family: Inter, ‘Arial’, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        color: #FF0000;
+        display: block;
+        text-align: center;
+    }
+}

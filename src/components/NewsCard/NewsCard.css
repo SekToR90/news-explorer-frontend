@@ -1,0 +1,296 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 576px;
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
+.card__button-container{
+    width: calc(100% - 48px);
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.card__button-save+.card__button-text {
+    display: none;
+}
+
+.card__button-save {
+    background-image: url("../../images/news-save-button.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card__button-save:focus {
+    outline: none;
+}
+
+.card__button-save:hover {
+    cursor: pointer;
+    background-image: url("../../images/news-save-button-hover.svg");
+}
+
+.card__button-save.card__button-save_active {
+    background-image: url("../../images/news-save-button-active.svg");
+}
+
+.card__button-save_active:hover {
+    cursor: pointer;
+}
+
+.card__button-save:hover+.card__button-text {
+    display: block;
+    margin: 0 5px 0 0;
+    padding: 14px 0;
+    width: 182px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+    text-align: center;
+}
+
+.card__delete-container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.card__delete-button {
+    background-image: url("../../images/icon-delete.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+}
+
+.card__delete-button:focus {
+    outline: none;
+}
+
+.card__delete-button:hover {
+    cursor: pointer;
+    background-image: url("../../images/icon-delete-hover.svg");
+}
+
+.card__delete-button+.card__button-text {
+    display: none;
+}
+
+.card__delete-button:hover+.card__button-text {
+    display: block;
+    margin: 0 5px 0 0;
+    padding: 14px 0;
+    width: 159px;
+    height: 12px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+    text-align: center;
+}
+
+.card__keyword{
+    margin: 0;
+    padding: 8px;
+    width: 88px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: #000000;
+}
+
+.card__group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 304px;
+}
+
+.card__image {
+    object-fit: cover;
+    max-width: 400px;
+    height: 272px;
+    border-radius: 10px 10px 0 0;
+}
+
+.card__group-text {
+    width: 352px;
+    margin: 20px auto 0;
+}
+
+.card__data {
+    font-family: 'Source Sans Pro', ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 0 12px;
+    color: #B6BCBF;
+}
+
+.card__title {
+    margin: 0 0 16px 0;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow-y: hidden;
+    word-wrap: break-word;
+    font-family: Roboto Slab, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 26px;
+    line-height: 30px;
+    color: #1A1B22;
+}
+
+.card__subtitle {
+    margin: 0 0 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow-y: hidden;
+    -webkit-line-clamp: 5;
+    font-family: Roboto, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    color: #1A1B22;
+
+}
+
+.card__author {
+    margin: 0 0 24px 24px;
+    font-family: Roboto Slab, ‘Arial’, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #B6BCBF;
+}
+
+.card__link {
+    text-decoration: none;
+    max-height: 272px;
+}
+
+
+@media screen and (max-width: 768px) {
+    .card {
+        height: 420px;
+    }
+
+    .card__button-container{
+        width: calc(100% - 16px);
+        top: 8px;
+        right: 8px;
+    }
+
+    .card__delete-button:hover+.card__button-text {
+      display: none;
+    }
+
+    .card__image {
+        width: 224px;
+        height: 150px;
+    }
+
+    .card__group {
+        height: 270px;
+    }
+
+    .card__group-text {
+        width: 192px;
+        margin: 16px auto 0;
+    }
+
+    .card__title {
+        margin: 0 0 10px;
+        font-size: 22px;
+        line-height: 24px;
+        -webkit-line-clamp: 3;
+    }
+
+    .card__subtitle {
+        margin: 0 0 12px;
+        -webkit-line-clamp: 4;
+    }
+
+    .card__link {
+        height: 150px;
+    }
+}
+
+
+
+@media screen and (max-width: 320px) {
+    .card {
+        height: 440px;
+    }
+
+    .card__button-container{
+        width: calc(100% - 32px);
+        top: 16px;
+        right: 16px;
+    }
+
+    .card__keyword{
+        width: 88px;
+    }
+
+    .card__image {
+        width: 288px;
+        height: 196px;
+    }
+
+    .card__group {
+        height: 250px;
+    }
+
+    .card__group-text {
+        width: 256px;
+        margin: 16px 16px 0;
+    }
+
+    .card__title {
+        margin: 0 0 10px;
+        line-height: 26px;
+        -webkit-line-clamp: 2;
+    }
+
+    .card__subtitle {
+        margin: 0 0 8px;
+        height: 88px;
+        -webkit-line-clamp: 4;
+    }
+
+    .card__link {
+        height: 150px;
+    }
+}
