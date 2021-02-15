@@ -11,6 +11,8 @@ import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
 import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
 import SavedNews from '../SavedNews/SavedNews';
+import * as news from '../../utils/NewsApi';
+import * as newsAuth from '../../utils/newsAuth';
 
 function App() {
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
@@ -18,12 +20,16 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isNavigationPopupOpen, setIsNavigationPopupOpen] = React.useState(false);
 
-  const [loggedIn, setLoggedIn] = React.useState(false); //Временное решение авторизации
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [userData, setUserData] = React.useState({}); ///! Данные о пользователе
+  const [userExists, setUserExists] = React.useState({});
 
-  const [queryIn, setQueryIn] = React.useState(false); //Определяем нажали ли кнопку "Поиск", переделать на 3 этапе
-  const [isSearchPreloader, setIsSearchPreloader] = React.useState(false); //запускаем прелоудер поиска, переделать на 3 этапе
-  const [isNotFoundPreloader, setIsNotFoundPreloader] = React.useState(false); //запускаем прелоудер "ничего не найдено", переделать на 3 этапе
-  const [isNewsCardList, setIsNewsCardList] = React.useState(false); //запускаем отрисовку карточек, переделать на 3 этапе
+  const [queryIn, setQueryIn] = React.useState(false); //Определяем нажали ли кнопку "Поиск"
+  const [isSearchPreloader, setIsSearchPreloader] = React.useState(false); //запускаем прелоудер поиска
+  const [isNotFoundPreloader, setIsNotFoundPreloader] = React.useState(false); //запускаем прелоудер "ничего не найдено"
+  const [isNewsCardList, setIsNewsCardList] = React.useState(false); //запускаем отрисовку карточек
+  const [isNewsCards, setIsNewsCards] = React.useState([]); //Стейт с новостными данными
+  const [isServerError, setIsServerError] = React.useState(false);
 
   //На разрешении 320px удаляем логотип и кнопку из блока Header
   const [isClickButtonAuthenticate, setIsClickButtonAuthenticate] = React.useState(false);
@@ -33,28 +39,44 @@ function App() {
   }
   ///////////////////////////////////////////////
 
-  const handleQueryInClick = () => {
-    // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе
+  //Функция поиска новостей
+  const handleQueryInClick = keyword => {
     setQueryIn(true);
     setIsNewsCardList(false);
+    setIsNotFoundPreloader(false);
     setIsSearchPreloader(true);
-
-    setTimeout(startNotFoundPreloader, 3000);
+    news
+      .newsApi(keyword)
+      .then(data => {
+        console.log(data);
+        if (data.articles.length === 0) {
+          return startNotFoundPreloader();
+        }
+        setIsNewsCards(
+          data.articles.map(item => ({
+            link: item.url,
+            date: item.publishedAt,
+            title: item.title,
+            text: item.description,
+            source: item.author,
+            image: item.urlToImage,
+          })),
+        );
+        setIsNewsCardList(true);
+        setIsSearchPreloader(false);
+      })
+      .catch(err => {
+        setIsServerError(true);
+      });
   };
 
-  // отрисовываем прелоудер "ничего не найдено" , переделать на 3 этапе
+  // Функция запускает прелоудер "ничего не найдено"
   const startNotFoundPreloader = () => {
+    setIsNewsCardList(false);
     setIsSearchPreloader(false);
     setIsNotFoundPreloader(true);
-
-    setTimeout(startNewsCardList, 3000);
   };
-
-  // отрисовываем блок с карточками , переделать на 3 этапе
-  const startNewsCardList = () => {
-    setIsNotFoundPreloader(false);
-    setIsNewsCardList(true);
-  };
+  /////////////////////////////////////////////////////
 
   //Обработчики событий открытия/закрытия модалок
   const handleLoginPopupClick = () => {
@@ -91,6 +113,13 @@ function App() {
       window.removeEventListener('keydown', keydownEscape);
     }
   }
+
+  const resetValidation = () => {
+    setUserExists({
+      error: false,
+      text: '',
+    });
+  };
   //
 
   //функция смены попапов
@@ -111,17 +140,78 @@ function App() {
   React.useEffect(() => {
     window.addEventListener('keydown', keydownEscape);
   });
+  ////////////////////////////////////////
 
   //Блоки регистрации и авторизации
-  const handleLogin = () => {
-    setLoggedIn(true); //Временное решение авторизации
+  const handleRegister = (email, password, name) => {
+    newsAuth
+      .register(email, password, name)
+      .then(() => {
+        resetValidation();
+        closeAllPopup();
+        handleInfoTooltipPopupClick();
+      })
+      .catch(err => {
+        if (err === 'Ошибка: 409') {
+          setUserExists({
+            error: true,
+            text: 'Такой пользователь уже есть',
+          });
+        }
+        console.log(err);
+      });
   };
 
+  const handleLogin = (email, password) => {
+    newsAuth
+      .authorize(email, password)
+      .then(data => {
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => {
+        if (err.status === 400) {
+          console.log('не передано одно из полей');
+        } else if (err.status === 401) {
+          console.log('пользователь с email не найден');
+        }
+      });
+  };
+
+  //Проверяем, есть ли токен
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      newsAuth
+        .getContent(jwt)
+        .then(res => {
+          setUserData({ userName: res.name });
+          setLoggedIn(true);
+        })
+        .catch(err => {
+          if (err.status === 401) {
+            console.log(err.statusText);
+          } else {
+            throw err;
+          }
+        });
+    }
+  };
+
+  // Удаляем токен и обнуляем стейты
   const handleLogout = () => {
-    // Удаляем токен и обнуляем стейты
+    localStorage.removeItem('jwt');
+    setUserData({});
     setLoggedIn(false);
   };
-  //
+  console.log(userData);
+  ////////////////////////////////////////////
 
   return (
     <div className="App">
@@ -135,14 +225,17 @@ function App() {
           handleNavigationPopupClick={handleNavigationPopupClick}
           isOpen={isNavigationPopupOpen}
           clickAuthenticate={isClickButtonAuthenticate}
+          userData={userData}
         />
         <SearchForm handleQueryInClick={handleQueryInClick} />
-        {queryIn ? ( // Определяем нажали ли кнопку "Поиск" , переделать на 3 этапе
+        {queryIn ? ( // Определяем нажали ли кнопку "Поиск"
           <Main
             loggedIn={loggedIn}
             isSearchPreloader={isSearchPreloader}
             isNotFoundPreloader={isNotFoundPreloader}
             isNewsCardList={isNewsCardList}
+            isNewsCards={isNewsCards} //Новостные данные
+            isServerError={isServerError}
           />
         ) : null}
         <About />
@@ -156,6 +249,7 @@ function App() {
           handleLogout={handleLogout}
           handleNavigationPopupClick={handleNavigationPopupClick}
           isOpen={isNavigationPopupOpen}
+          userData={userData}
         />
         <SavedNewsHeader />
         <SavedNews loggedIn={loggedIn} />
@@ -175,7 +269,9 @@ function App() {
         isOpen={isRegisterPopupOpen}
         onClose={closeAllPopup}
         openNewPopup={handleChangePopup}
-        openInfoTooltipPopup={handleInfoTooltipPopupClick}
+        handleRegister={handleRegister}
+        userExists={userExists}
+        resetValidation={resetValidation}
       />
 
       <InfoTooltip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopup} openNewPopup={handleChangePopup} />

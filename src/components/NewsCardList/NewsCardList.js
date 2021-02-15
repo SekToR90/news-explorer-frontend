@@ -1,18 +1,16 @@
 import React from 'react';
 import NewsCard from '../NewsCard/NewsCard';
 
-import articles from '../../utils/articles';
-
 function NewsCardList(props) {
   const [isCardNumber, setIsCardNumber] = React.useState([]);
 
   //логика отрисовки карточек
   React.useEffect(() => {
-    setIsCardNumber(articles.slice(0, 3));
+    setIsCardNumber(props.isNewsCards.slice(0, 3));
   }, []);
 
   function handleClick() {
-    setIsCardNumber(articles.slice(0, isCardNumber.length + 3));
+    setIsCardNumber(props.isNewsCards.slice(0, isCardNumber.length + 3));
   }
   //
   return (

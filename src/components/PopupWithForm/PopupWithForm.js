@@ -1,26 +1,6 @@
 import React from 'react';
 
 function PopupWithForm(props) {
-  // временное решение ошибки сервера
-  const [errorServer, setErrorServer] = React.useState(false);
-  const [errorMessage, setErrorMessage] = React.useState('');
-
-  function serverErrorEnabled(evt) {
-    evt.preventDefault();
-    setErrorServer(true);
-    setErrorMessage('Такой пользователь уже есть');
-
-    return setTimeout(serverErrorDisabled, 3000);
-  }
-
-  function serverErrorDisabled() {
-    setErrorServer(false);
-    setErrorMessage('');
-
-    props.onSubmit();
-  } //
-
-  const errorServerClassButton = `${errorServer ? 'modal__button-save_error' : ''}`; //Поправить на 3 этапе
   const buttonNoValid = `${props.submitIsValid ? 'modal__button-save_disabled' : 'modal__button-save_active'}`;
   const infoTooltip = `${props.name === 'info' ? `_${props.name}` : ''}`;
 
@@ -39,23 +19,11 @@ function PopupWithForm(props) {
         <h2 className={`modal__title modal__title${infoTooltip}`}>{props.title}</h2>
         {props.name !== 'info' ? (
           <>
-            <form
-              action="#"
-              name={props.name}
-              className="modal__field"
-              onSubmit={props.name === 'login' ? serverErrorEnabled : props.onSubmit}
-              noValidate
-            >
+            <form action="#" name={props.name} className="modal__field" onSubmit={props.onSubmit} noValidate>
               {props.children}
-              <span
-                className={`modal__button-error ${errorServer ? 'modal__button-error_visible' : ''}`}
-                id="buttonSave-error"
-              >
-                {errorMessage}
-              </span>
               <button
                 type="submit"
-                className={`modal__button-save ${buttonNoValid} ${errorServerClassButton} `}
+                className={`modal__button-save ${buttonNoValid} ${props.errorServerClassButton} `}
                 disabled={props.submitIsValid}
               >
                 {props.buttonText}

@@ -107,7 +107,7 @@
 .header__button_articles {
     justify-content: space-between;
     padding: 0 19px 0;
-    width: 112px;
+    min-width: 112px;
 }
 
 .header__image {
@@ -117,7 +117,7 @@
 
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 785px) {
     .header__logo {
         margin: 0 0 0 40px;
     }

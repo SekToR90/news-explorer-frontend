@@ -17,7 +17,7 @@ function SearchForm(props) {
     }
 
     setInputSearchErrorMessage('');
-    props.handleQueryInClick(); //выставляем флаг о запросе новостей, переделать на 3 этапе
+    props.handleQueryInClick(inputSearch); //выставляем флаг о запросе новостей, переделать на 3 этапе
   }
 
   return (

@@ -14,6 +14,8 @@ function RegisterPopup(props) {
   const [nameIsValid, setNameIsValid] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
 
+  const errorServerClassButton = `${props.userExists.error ? 'modal__button-save_error' : ''}`; //Поправить на 3 этапе
+
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
     setEmailErrorMessage(evt.target.validationMessage);
@@ -35,16 +37,24 @@ function RegisterPopup(props) {
   function resetAllInput() {
     setEmail('');
     setPassword('');
+    setName('');
+    setEmailErrorMessage('');
+    setPasswordErrorMessage('');
+    setNameErrorMessage('');
     setEmailIsValid(false);
     setPasswordIsValid(false);
     setNameIsValid(false);
   }
 
+  React.useEffect(() => {
+    resetAllInput();
+    props.resetValidation();
+  }, [props.isOpen]);
+
   function handleSubmit(evt) {
     evt.preventDefault();
     resetAllInput();
-    props.onClose(); //удалить
-    props.openInfoTooltipPopup();
+    props.handleRegister(email, password, name);
   }
 
   return (
@@ -55,9 +65,10 @@ function RegisterPopup(props) {
       switchModal="Войти"
       isOpen={props.isOpen ? 'modal_open' : ''}
       onSubmit={handleSubmit}
+      errorServerClassButton={errorServerClassButton}
       onClose={props.onClose}
       openNewPopup={props.openNewPopup}
-      submitIsValid={!emailIsValid || !passwordIsValid}
+      submitIsValid={!emailIsValid || !passwordIsValid || !nameIsValid}
       children={
         <>
           <p className="modal-title">Email</p>
@@ -105,6 +116,12 @@ function RegisterPopup(props) {
           />
           <span className={`modal__error ${!nameIsValid ? 'modal__error_visible' : ''}`} id="urlAvatar-error">
             {nameErrorMessage}
+          </span>
+          <span
+            className={`modal__button-error ${props.userExists.error ? 'modal__button-error_visible' : ''}`}
+            id="buttonSave-error"
+          >
+            {props.userExists.text}
           </span>
         </>
       }

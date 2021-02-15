@@ -65,7 +65,7 @@ function Header(props) {
                   className={`header__button header__button_articles ${headerButtonBlack}`}
                   onClick={props.handleLogout}
                 >
-                  Грета <img className="header__image" src={headerMainImage} alt="Кнопка выхода" />
+                  {props.userData.userName} <img className="header__image" src={headerMainImage} alt="Кнопка выхода" />
                 </button>
               </>
             ) : (

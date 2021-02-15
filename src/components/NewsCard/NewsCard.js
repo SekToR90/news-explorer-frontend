@@ -12,6 +12,28 @@ function NewsCard(props) {
   };
   //
 
+  function longDateFormat(data) {
+    const month = [
+      'января',
+      'февраля',
+      'марта',
+      'апреля',
+      'мая',
+      'июня',
+      'июля',
+      'августа',
+      'сентября',
+      'октября',
+      'ноября',
+      'декабря',
+    ];
+    const dateComponent = new Date(data);
+    const newDateComponent = `${dateComponent.getDate()} ${
+      month[dateComponent.getMonth()]
+    }, ${dateComponent.getFullYear()}`;
+    return newDateComponent;
+  }
+
   function handleDeleteCard() {
     console.log('Карточка удалена');
   }
@@ -50,7 +72,7 @@ function NewsCard(props) {
       </a>
       <div className="card__group">
         <div className="card__group-text">
-          <p className="card__data">{props.date}</p>
+          <p className="card__data">{longDateFormat(props.date)}</p>
           <a className="card__link" href={props.link} target="_blank" rel="noreferrer">
             <h2 className="card__title">{props.title}</h2>
           </a>
