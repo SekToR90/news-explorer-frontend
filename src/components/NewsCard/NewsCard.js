@@ -9,6 +9,15 @@ function NewsCard(props) {
       return setSaveNewsCard(false);
     }
     setSaveNewsCard(true);
+    props.handleSaveNews({
+      keyword: props.newsKeyword,
+      title: props.title,
+      text: props.text,
+      date: props.date,
+      source: props.source,
+      link: props.link,
+      image: props.image,
+    });
   };
   //
 

@@ -18,7 +18,13 @@ function NewsCardList(props) {
       <h2 className="elements__title">Результаты поиска</h2>
       <div className="cards">
         {isCardNumber.map(item => (
-          <NewsCard {...item} loggedIn={props.loggedIn} name="main" />
+          <NewsCard
+            {...item}
+            loggedIn={props.loggedIn}
+            name="main"
+            newsKeyword={props.newsKeyword}
+            handleSaveNews={props.handleSaveNews}
+          />
         ))}
       </div>
       <button type="button" className="elements__card-add" onClick={handleClick}>

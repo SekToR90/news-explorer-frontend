@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { useHistory, Route, Switch, useLocation } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -9,20 +9,27 @@ import Footer from '../Footer/Footer';
 import LoginPopup from '../LoginPopup/LoginPopup';
 import RegisterPopup from '../RegisterPopup/RegisterPopup';
 import InfoTooltip from '../InfoTooltip/InfoTooltip';
-import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import SavedNews from '../SavedNews/SavedNews';
 import * as news from '../../utils/NewsApi';
 import * as newsAuth from '../../utils/newsAuth';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import MainApi from '../../utils/MainApi';
 
 function App() {
+  const location = useLocation();
+  const history = useHistory();
+
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
   const [isRegisterPopupOpen, setIsRegisterPopupOpen] = React.useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isNavigationPopupOpen, setIsNavigationPopupOpen] = React.useState(false);
 
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userData, setUserData] = React.useState({}); ///! Данные о пользователе
+  const [currentUser, setCurrentUser] = React.useState({}); // Данные о пользователе
   const [userExists, setUserExists] = React.useState({});
+  const [newsKeyword, setNewsKeyword] = React.useState(''); //Хранит ключевое слово по которому искали новости
+  const [cards, setCards] = React.useState([]); // Хранит все карточки пользователя
 
   const [queryIn, setQueryIn] = React.useState(false); //Определяем нажали ли кнопку "Поиск"
   const [isSearchPreloader, setIsSearchPreloader] = React.useState(false); //запускаем прелоудер поиска
@@ -39,8 +46,99 @@ function App() {
   }
   ///////////////////////////////////////////////
 
+  //Блоки регистрации и авторизации
+  const handleRegister = (email, password, name) => {
+    newsAuth
+      .register(email, password, name)
+      .then(() => {
+        resetValidation();
+        closeAllPopup();
+        handleInfoTooltipPopupClick();
+      })
+      .catch(err => {
+        if (err === 'Ошибка: 409') {
+          setUserExists({
+            error: true,
+            text: 'Такой пользователь уже есть',
+          });
+        }
+        console.log(err);
+      });
+  };
+
+  const handleLogin = (email, password) => {
+    newsAuth
+      .authorize(email, password)
+      .then(data => {
+        if (data.token) {
+          localStorage.setItem('jwt', data.token);
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => {
+        if (err.status === 400) {
+          console.log('не передано одно из полей');
+        } else if (err.status === 401) {
+          console.log('пользователь с email не найден');
+        }
+      });
+  };
+
+  //Проверяем, есть ли токен и отрисовываем карточки из локального хранилища
+  React.useEffect(() => {
+    tokenCheck();
+    setNewsKeyword(localStorage.getItem('keyword'));
+    const articles = JSON.parse(localStorage.getItem('articles'));
+    if (articles === null) {
+      return;
+    }
+    setIsNewsCards(
+      articles.map(item => ({
+        link: item.url,
+        date: item.publishedAt,
+        title: item.title,
+        text: item.description,
+        source: item.author,
+        image: item.urlToImage,
+      })),
+    );
+    setQueryIn(true);
+    setIsNewsCardList(true);
+  }, []);
+
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      newsAuth
+        .getContent(jwt)
+        .then(res => {
+          if (res.email) {
+            setCurrentUser({ userName: res.name, id: res._id });
+            setLoggedIn(true);
+          }
+        })
+        .catch(err => {
+          if (err.status === 401) {
+            console.log(err.statusText);
+          } else {
+            throw err;
+          }
+        });
+    }
+  };
+
+  // Удаляем токен и обнуляем стейты
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    setCurrentUser({});
+    setLoggedIn(false);
+  };
+  ////////////////////////////////////////////
+
   //Функция поиска новостей
   const handleQueryInClick = keyword => {
+    localStorage.removeItem('keyword');
+    localStorage.removeItem('articles');
     setQueryIn(true);
     setIsNewsCardList(false);
     setIsNotFoundPreloader(false);
@@ -48,12 +146,15 @@ function App() {
     news
       .newsApi(keyword)
       .then(data => {
-        console.log(data);
         if (data.articles.length === 0) {
           return startNotFoundPreloader();
         }
+        localStorage.setItem('keyword', keyword);
+        setNewsKeyword(keyword);
+        localStorage.setItem('articles', JSON.stringify(data.articles));
+        const articles = JSON.parse(localStorage.getItem('articles'));
         setIsNewsCards(
-          data.articles.map(item => ({
+          articles.map(item => ({
             link: item.url,
             date: item.publishedAt,
             title: item.title,
@@ -69,6 +170,39 @@ function App() {
         setIsServerError(true);
       });
   };
+
+  //Поличаем новости
+  React.useEffect(() => {
+    MainApi.getAllCards()
+      .then(data => {
+        setCards(data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, []);
+  ///////////////////////////////////
+
+  //Функция сохранения новостей
+  const handleSaveNews = value => {
+    MainApi.postAddNewsCard(value)
+      .then(data => {
+        console.log(data); //Доделать, необходимо обновлять массив со всеми сохраненными карточками
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  //////////////////////////////////////////////
+
+  //Открываем модалку при вводе в адресную строку "/saved-news" для не зарегистрированного пользователя
+  React.useEffect(() => {
+    const routerState = history.location.state;
+    if (routerState && routerState.noAuthRedirected && history.action === 'REPLACE') {
+      setIsLoginPopupOpen(true);
+    }
+  }, []);
+  //////////////////////////////////////////////////////
 
   // Функция запускает прелоудер "ничего не найдено"
   const startNotFoundPreloader = () => {
@@ -142,140 +276,74 @@ function App() {
   });
   ////////////////////////////////////////
 
-  //Блоки регистрации и авторизации
-  const handleRegister = (email, password, name) => {
-    newsAuth
-      .register(email, password, name)
-      .then(() => {
-        resetValidation();
-        closeAllPopup();
-        handleInfoTooltipPopupClick();
-      })
-      .catch(err => {
-        if (err === 'Ошибка: 409') {
-          setUserExists({
-            error: true,
-            text: 'Такой пользователь уже есть',
-          });
-        }
-        console.log(err);
-      });
-  };
-
-  const handleLogin = (email, password) => {
-    newsAuth
-      .authorize(email, password)
-      .then(data => {
-        if (data.token) {
-          localStorage.setItem('jwt', data.token);
-          setLoggedIn(true);
-        }
-      })
-      .catch(err => {
-        if (err.status === 400) {
-          console.log('не передано одно из полей');
-        } else if (err.status === 401) {
-          console.log('пользователь с email не найден');
-        }
-      });
-  };
-
-  //Проверяем, есть ли токен
-  React.useEffect(() => {
-    tokenCheck();
-  }, []);
-
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      newsAuth
-        .getContent(jwt)
-        .then(res => {
-          setUserData({ userName: res.name });
-          setLoggedIn(true);
-        })
-        .catch(err => {
-          if (err.status === 401) {
-            console.log(err.statusText);
-          } else {
-            throw err;
-          }
-        });
-    }
-  };
-
-  // Удаляем токен и обнуляем стейты
-  const handleLogout = () => {
-    localStorage.removeItem('jwt');
-    setUserData({});
-    setLoggedIn(false);
-  };
-  console.log(userData);
-  ////////////////////////////////////////////
-
   return (
-    <div className="App">
-      <Route exact path="/">
-        <Header
-          routePathStart={'/'}
-          routePathNews={'/saved-news'}
-          handleLoginPopupClick={handleLoginPopupClick}
-          loggedIn={loggedIn}
-          handleLogout={handleLogout}
-          handleNavigationPopupClick={handleNavigationPopupClick}
-          isOpen={isNavigationPopupOpen}
-          clickAuthenticate={isClickButtonAuthenticate}
-          userData={userData}
-        />
-        <SearchForm handleQueryInClick={handleQueryInClick} />
-        {queryIn ? ( // Определяем нажали ли кнопку "Поиск"
-          <Main
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+        {location.pathname === '/' ? (
+          <Header
+            routePathStart={'/'}
+            routePathNews={'/saved-news'}
+            handleLoginPopupClick={handleLoginPopupClick}
             loggedIn={loggedIn}
-            isSearchPreloader={isSearchPreloader}
-            isNotFoundPreloader={isNotFoundPreloader}
-            isNewsCardList={isNewsCardList}
-            isNewsCards={isNewsCards} //Новостные данные
-            isServerError={isServerError}
+            handleLogout={handleLogout}
+            handleNavigationPopupClick={handleNavigationPopupClick}
+            isOpen={isNavigationPopupOpen}
+            clickAuthenticate={isClickButtonAuthenticate}
           />
-        ) : null}
-        <About />
-      </Route>
+        ) : (
+          <Header
+            routePathStart={'/'}
+            routePathNews={'/saved-news'}
+            loggedIn={loggedIn}
+            handleLogout={handleLogout}
+            handleNavigationPopupClick={handleNavigationPopupClick}
+            isOpen={isNavigationPopupOpen}
+          />
+        )}
 
-      <Route path="/saved-news">
-        <Header
-          routePathStart={'/'}
-          routePathNews={'/saved-news'}
-          loggedIn={loggedIn}
-          handleLogout={handleLogout}
-          handleNavigationPopupClick={handleNavigationPopupClick}
-          isOpen={isNavigationPopupOpen}
-          userData={userData}
+        <Switch>
+          <Route exact path="/">
+            <SearchForm handleQueryInClick={handleQueryInClick} />
+            {queryIn ? ( // Определяем нажали ли кнопку "Поиск"
+              <Main
+                loggedIn={loggedIn}
+                isSearchPreloader={isSearchPreloader}
+                isNotFoundPreloader={isNotFoundPreloader}
+                isNewsCardList={isNewsCardList}
+                isServerError={isServerError}
+                isNewsCards={isNewsCards}
+                newsKeyword={newsKeyword}
+                handleSaveNews={handleSaveNews}
+              />
+            ) : null}
+            <About />
+          </Route>
+
+          <ProtectedRoute path="/saved-news" loggedIn={loggedIn} component={SavedNews} cards={cards}></ProtectedRoute>
+        </Switch>
+
+        <Footer routePathStart={'/'} />
+
+        <LoginPopup
+          isOpen={isLoginPopupOpen}
+          onClose={closeAllPopup}
+          setLoggedIn={setLoggedIn}
+          handleLogin={handleLogin}
+          openNewPopup={handleChangePopup}
         />
-        <SavedNewsHeader />
-        <SavedNews loggedIn={loggedIn} />
-      </Route>
 
-      <Footer routePathStart={'/'} />
+        <RegisterPopup
+          isOpen={isRegisterPopupOpen}
+          onClose={closeAllPopup}
+          openNewPopup={handleChangePopup}
+          handleRegister={handleRegister}
+          userExists={userExists}
+          resetValidation={resetValidation}
+        />
 
-      <LoginPopup
-        isOpen={isLoginPopupOpen}
-        onClose={closeAllPopup}
-        setLoggedIn={setLoggedIn}
-        handleLogin={handleLogin}
-        openNewPopup={handleChangePopup}
-      />
-
-      <RegisterPopup
-        isOpen={isRegisterPopupOpen}
-        onClose={closeAllPopup}
-        openNewPopup={handleChangePopup}
-        handleRegister={handleRegister}
-        userExists={userExists}
-        resetValidation={resetValidation}
-      />
-
-      <InfoTooltip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopup} openNewPopup={handleChangePopup} />
-    </div>
+        <InfoTooltip isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopup} openNewPopup={handleChangePopup} />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 

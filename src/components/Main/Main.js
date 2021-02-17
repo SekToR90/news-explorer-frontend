@@ -30,7 +30,14 @@ function Main(props) {
         />
       ) : null}
 
-      {props.isNewsCardList ? <NewsCardList loggedIn={props.loggedIn} isNewsCards={props.isNewsCards} /> : null}
+      {props.isNewsCardList ? (
+        <NewsCardList
+          loggedIn={props.loggedIn}
+          isNewsCards={props.isNewsCards}
+          newsKeyword={props.newsKeyword}
+          handleSaveNews={props.handleSaveNews}
+        />
+      ) : null}
     </main>
   );
 }
