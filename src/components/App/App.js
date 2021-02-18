@@ -173,14 +173,16 @@ function App() {
 
   //Поличаем новости
   React.useEffect(() => {
-    MainApi.getAllCards()
-      .then(data => {
-        setCards(data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, []);
+    if (loggedIn) {
+      MainApi.getAllCards()
+        .then(data => {
+          setCards(data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }, [currentUser, loggedIn]);
   ///////////////////////////////////
 
   //Функция сохранения новостей
@@ -195,9 +197,24 @@ function App() {
   };
   //////////////////////////////////////////////
 
+  //Удаляем новостную карточку
+  const handleCardDelete = _id => {
+    MainApi.deleteCards(_id)
+      .then(() => {
+        // Формируем новый массив на основе имеющегося, удаляя из него выбранную карточку
+        const cardsDelete = cards.filter(item => item._id !== _id);
+        setCards(cardsDelete);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+  //////////////////////////////////////////////////
+
   //Открываем модалку при вводе в адресную строку "/saved-news" для не зарегистрированного пользователя
   React.useEffect(() => {
     const routerState = history.location.state;
+    console.log(routerState);
     if (routerState && routerState.noAuthRedirected && history.action === 'REPLACE') {
       setIsLoginPopupOpen(true);
     }
@@ -319,7 +336,13 @@ function App() {
             <About />
           </Route>
 
-          <ProtectedRoute path="/saved-news" loggedIn={loggedIn} component={SavedNews} cards={cards}></ProtectedRoute>
+          <ProtectedRoute
+            path="/saved-news"
+            loggedIn={loggedIn}
+            component={SavedNews}
+            handleCardDelete={handleCardDelete}
+            cards={cards}
+          />
         </Switch>
 
         <Footer routePathStart={'/'} />

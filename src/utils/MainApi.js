@@ -39,18 +39,18 @@ class Api {
     });
   }
 
-  // //Запрос на удаление карточки
-  // deleteCards(id) {
-  //   return fetch(`${this.url}/cards/${id}`, {
-  //     method: 'DELETE',
-  //     headers: this.headers,
-  //   }).then(res => {
-  //     if (res.ok) {
-  //       return res.json();
-  //     }
-  //     return Promise.reject(`Ошибка: ${res.status}`);
-  //   });
-  // }
+  //Запрос на удаление карточки
+  deleteCards(articleId) {
+    return fetch(`${this.url}/articles/${articleId}`, {
+      method: 'DELETE',
+      headers: this.headers,
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 }
 
 const api = new Api({

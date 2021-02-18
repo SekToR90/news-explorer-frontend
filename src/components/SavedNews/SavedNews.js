@@ -10,7 +10,12 @@ function SavedNews(props) {
         <div className="saved-news__container">
           <div className="cards">
             {props.cards.map(item => (
-              <NewsCard {...item} loggedIn={props.loggedIn} name="saved-news" />
+              <NewsCard
+                {...item}
+                loggedIn={props.loggedIn}
+                handleCardDelete={props.handleCardDelete}
+                name="saved-news"
+              />
             ))}
           </div>
         </div>
