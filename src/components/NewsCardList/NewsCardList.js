@@ -24,6 +24,8 @@ function NewsCardList(props) {
             name="main"
             newsKeyword={props.newsKeyword}
             handleSaveNews={props.handleSaveNews}
+            deleteArticle={props.deleteArticle}
+            cards={props.cards}
           />
         ))}
       </div>

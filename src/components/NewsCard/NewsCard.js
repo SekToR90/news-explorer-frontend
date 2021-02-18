@@ -3,10 +3,16 @@ import React from 'react';
 function NewsCard(props) {
   const [saveNewsCard, setSaveNewsCard] = React.useState(false); //проверяем нажата ли кнопка сохранения карточки
 
+  React.useEffect(() => {
+    if (props.name === 'main') {
+      setSaveNewsCard(props.cards.find(item => item.title === props.title && item.text === props.text));
+    }
+  }, [props.cards, props.title]);
+
   //Ставим активное состояние кнопки сохранения карточки
   const hideMouseClick = () => {
     if (saveNewsCard) {
-      return setSaveNewsCard(false);
+      return deleteNews();
     }
     setSaveNewsCard(true);
     props.handleSaveNews({
@@ -20,6 +26,19 @@ function NewsCard(props) {
     });
   };
   //
+
+  function deleteNews() {
+    setSaveNewsCard(false);
+    props.deleteArticle({
+      keyword: props.newsKeyword,
+      title: props.title,
+      text: props.text,
+      date: props.date,
+      source: props.source,
+      link: props.link,
+      image: props.image,
+    });
+  }
 
   function longDateFormat(data) {
     const month = [

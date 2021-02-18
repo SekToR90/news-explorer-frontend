@@ -188,8 +188,17 @@ function App() {
   //Функция сохранения новостей
   const handleSaveNews = value => {
     MainApi.postAddNewsCard(value)
-      .then(data => {
-        console.log(data); //Доделать, необходимо обновлять массив со всеми сохраненными карточками
+      .then(res => {
+        const newCard = {
+          link: res.link,
+          date: res.date,
+          title: res.title,
+          text: res.text,
+          source: res.source,
+          image: res.image,
+          _id: res._id,
+        };
+        setCards([newCard, ...cards]);
       })
       .catch(err => {
         console.log(err);
@@ -211,10 +220,22 @@ function App() {
   };
   //////////////////////////////////////////////////
 
+  //Удаление сохраненных новостей
+  const deleteArticle = data => {
+    const mySavedArticle = cards.find(item => item.title === data.title && item.text === data.text);
+
+    handleCardDelete(mySavedArticle._id);
+  };
+  /////////////////////////////////////////////////
+  //
+  // const searchArticle = () => {
+  //   const myArticle = cards.find(item => item.title === cards.title && item.text === cards.text);
+  //   console.log(myArticle);
+  // };
+
   //Открываем модалку при вводе в адресную строку "/saved-news" для не зарегистрированного пользователя
   React.useEffect(() => {
     const routerState = history.location.state;
-    console.log(routerState);
     if (routerState && routerState.noAuthRedirected && history.action === 'REPLACE') {
       setIsLoginPopupOpen(true);
     }
@@ -331,6 +352,8 @@ function App() {
                 isNewsCards={isNewsCards}
                 newsKeyword={newsKeyword}
                 handleSaveNews={handleSaveNews}
+                deleteArticle={deleteArticle}
+                cards={cards}
               />
             ) : null}
             <About />

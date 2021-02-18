@@ -36,6 +36,8 @@ function Main(props) {
           isNewsCards={props.isNewsCards}
           newsKeyword={props.newsKeyword}
           handleSaveNews={props.handleSaveNews}
+          deleteArticle={props.deleteArticle}
+          cards={props.cards}
         />
       ) : null}
     </main>
