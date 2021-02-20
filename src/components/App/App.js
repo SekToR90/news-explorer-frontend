@@ -71,8 +71,9 @@ function App() {
       .authorize(email, password)
       .then(data => {
         if (data.token) {
+          console.log(data);
           localStorage.setItem('jwt', data.token);
-          setLoggedIn(true);
+          tokenCheck();
         }
       })
       .catch(err => {
@@ -197,6 +198,7 @@ function App() {
           source: res.source,
           image: res.image,
           _id: res._id,
+          keyword: res.keyword,
         };
         setCards([newCard, ...cards]);
       })
@@ -235,9 +237,12 @@ function App() {
 
   //Открываем модалку при вводе в адресную строку "/saved-news" для не зарегистрированного пользователя
   React.useEffect(() => {
-    const routerState = history.location.state;
-    if (routerState && routerState.noAuthRedirected && history.action === 'REPLACE') {
-      setIsLoginPopupOpen(true);
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      const routerState = history.location.state;
+      if (routerState && routerState.noAuthRedirected && history.action === 'REPLACE') {
+        setIsLoginPopupOpen(true);
+      }
     }
   }, []);
   //////////////////////////////////////////////////////
@@ -364,6 +369,7 @@ function App() {
             loggedIn={loggedIn}
             component={SavedNews}
             handleCardDelete={handleCardDelete}
+            currentUser={currentUser}
             cards={cards}
           />
         </Switch>

@@ -33,6 +33,10 @@
     color: #1A1B22;
 }
 
+.saved-news-header__subtitle_none {
+    display: none;
+}
+
 .saved-news-header__subtitle_bold {
     font-weight: bold;
 }

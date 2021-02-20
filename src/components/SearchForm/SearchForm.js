@@ -17,7 +17,8 @@ function SearchForm(props) {
     }
 
     setInputSearchErrorMessage('');
-    props.handleQueryInClick(inputSearch); //выставляем флаг о запросе новостей, переделать на 3 этапе
+    const toUpperSearch = inputSearch[0].toUpperCase() + inputSearch.slice(1);
+    props.handleQueryInClick(toUpperSearch); //Вызываем функцию поиска по ключевому слову
   }
 
   return (

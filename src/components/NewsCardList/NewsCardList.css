@@ -48,6 +48,10 @@
     outline: none;
 }
 
+.elements__card-add_none{
+    display: none;
+}
+
 
 @media screen and (max-width: 768px) {
     .elements {

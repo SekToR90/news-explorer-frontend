@@ -12,6 +12,9 @@ function NewsCardList(props) {
   function handleClick() {
     setIsCardNumber(props.isNewsCards.slice(0, isCardNumber.length + 3));
   }
+
+  const endedCardNews = `${isCardNumber >= props.isNewsCards ? 'elements__card-add_none' : ''}`;
+
   //
   return (
     <section className="elements">
@@ -29,7 +32,7 @@ function NewsCardList(props) {
           />
         ))}
       </div>
-      <button type="button" className="elements__card-add" onClick={handleClick}>
+      <button type="button" className={`elements__card-add ${endedCardNews}`} onClick={handleClick}>
         Показать еще
       </button>
     </section>
