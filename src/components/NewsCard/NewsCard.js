@@ -63,7 +63,6 @@ function NewsCard(props) {
   }
 
   function handleDeleteCard(e) {
-    // Запрещаем браузеру переходить по адресу формы
     e.preventDefault();
     props.handleCardDelete(props._id);
   }

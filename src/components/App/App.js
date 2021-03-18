@@ -229,11 +229,6 @@ function App() {
     handleCardDelete(mySavedArticle._id);
   };
   /////////////////////////////////////////////////
-  //
-  // const searchArticle = () => {
-  //   const myArticle = cards.find(item => item.title === cards.title && item.text === cards.text);
-  //   console.log(myArticle);
-  // };
 
   //Открываем модалку при вводе в адресную строку "/saved-news" для не зарегистрированного пользователя
   React.useEffect(() => {
