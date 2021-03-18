@@ -25,14 +25,20 @@ function LoginPopup(props) {
   function resetAllInput() {
     setEmail('');
     setPassword('');
+    setEmailErrorMessage('');
+    setPasswordErrorMessage('');
     setEmailIsValid(false);
     setPasswordIsValid(false);
   }
 
+  React.useEffect(() => {
+    resetAllInput();
+  }, [props.isOpen]);
+
   function handleSubmit(evt) {
     // Запрещаем браузеру переходить по адресу формы
-    // evt.preventDefault();
-    props.handleLogin(); //Временное решение авторизации, переделать
+    evt.preventDefault();
+    props.handleLogin(email, password); //Временное решение авторизации, переделать
 
     resetAllInput();
     props.onClose(); //удалить

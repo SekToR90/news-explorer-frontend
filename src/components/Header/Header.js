@@ -3,9 +3,11 @@ import { Link, useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import headerImageMain from '../../images/header-image-main.svg';
 import headerImageArticles from '../../images/header-image-articles.svg';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Header(props) {
   const location = useLocation();
+  const currentUser = React.useContext(CurrentUserContext);
 
   const headerBlack = `${props.isOpen ? 'header__black' : ''}`;
   const headerMenuLogoBlack = `${props.isOpen || location.pathname === '/' ? 'header__logo_white' : ''}`;
@@ -65,7 +67,7 @@ function Header(props) {
                   className={`header__button header__button_articles ${headerButtonBlack}`}
                   onClick={props.handleLogout}
                 >
-                  Грета <img className="header__image" src={headerMainImage} alt="Кнопка выхода" />
+                  {currentUser.userName} <img className="header__image" src={headerMainImage} alt="Кнопка выхода" />
                 </button>
               </>
             ) : (

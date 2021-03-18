@@ -1,20 +1,35 @@
 import React from 'react';
-import NewsCard from "../NewsCard/NewsCard";
+import NewsCard from '../NewsCard/NewsCard';
+import SavedNewsHeader from '../SavedNewsHeader/SavedNewsHeader';
+import Preloader from '../Preloader/Preloader';
 
-import articles from '../../utils/articles'
-
-function SavedNews(props) {
-
-    return (
-        <section className='saved-news'>
-            <div className='saved-news__container'>
-                <div className='cards'>
-                    {articles.map((item) => (
-                        <NewsCard {... item} loggedIn={props.loggedIn} name="saved-news"/>))}
-                </div>
+function SavedNews({ cards, currentUser, handleCardDelete, loggedIn }) {
+  return (
+    <>
+      <SavedNewsHeader cards={cards} />
+      <section className="saved-news">
+        <div className="saved-news__container">
+          {cards.length > 0 ? (
+            <div className="cards">
+              {cards.map(item => (
+                <NewsCard {...item} loggedIn={loggedIn} handleCardDelete={handleCardDelete} name="saved-news" />
+              ))}
             </div>
-        </section>
-    );
+          ) : (
+            <Preloader
+              textSubtitle={'Здесь будут ваши сохраненные статьи'}
+              children={
+                <>
+                  <div className="preloader__image preloader__image_not-found"></div>
+                  <h3 className="preloader__title">Ничего не найдено</h3>
+                </>
+              }
+            />
+          )}
+        </div>
+      </section>
+    </>
+  );
 }
 
 export default SavedNews;

@@ -3,17 +3,69 @@ import React from 'react';
 function NewsCard(props) {
   const [saveNewsCard, setSaveNewsCard] = React.useState(false); //проверяем нажата ли кнопка сохранения карточки
 
+  React.useEffect(() => {
+    if (props.name === 'main') {
+      setSaveNewsCard(props.cards.find(item => item.title === props.title && item.text === props.text));
+    }
+  }, [props.cards, props.title]);
+
   //Ставим активное состояние кнопки сохранения карточки
   const hideMouseClick = () => {
     if (saveNewsCard) {
-      return setSaveNewsCard(false);
+      return deleteNews();
     }
     setSaveNewsCard(true);
+    props.handleSaveNews({
+      keyword: props.newsKeyword,
+      title: props.title,
+      text: props.text,
+      date: props.date,
+      source: props.source,
+      link: props.link,
+      image: props.image,
+    });
   };
   //
 
-  function handleDeleteCard() {
-    console.log('Карточка удалена');
+  function deleteNews() {
+    setSaveNewsCard(false);
+    props.deleteArticle({
+      keyword: props.newsKeyword,
+      title: props.title,
+      text: props.text,
+      date: props.date,
+      source: props.source,
+      link: props.link,
+      image: props.image,
+    });
+  }
+
+  function longDateFormat(data) {
+    const month = [
+      'января',
+      'февраля',
+      'марта',
+      'апреля',
+      'мая',
+      'июня',
+      'июля',
+      'августа',
+      'сентября',
+      'октября',
+      'ноября',
+      'декабря',
+    ];
+    const dateComponent = new Date(data);
+    const newDateComponent = `${dateComponent.getDate()} ${
+      month[dateComponent.getMonth()]
+    }, ${dateComponent.getFullYear()}`;
+    return newDateComponent;
+  }
+
+  function handleDeleteCard(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    props.handleCardDelete(props._id);
   }
 
   return (
@@ -50,7 +102,7 @@ function NewsCard(props) {
       </a>
       <div className="card__group">
         <div className="card__group-text">
-          <p className="card__data">{props.date}</p>
+          <p className="card__data">{longDateFormat(props.date)}</p>
           <a className="card__link" href={props.link} target="_blank" rel="noreferrer">
             <h2 className="card__title">{props.title}</h2>
           </a>
