@@ -2,7 +2,10 @@
 <img src="https://github.com/SekToR90/news-explorer-frontend/blob/edit/src/images/news-explorer-logo.png" width="1060">
 
 ### О проекте
-News Explorer - это сервис, в котором можно найти новости по запросу и сохранить в личном кабинете
+News Explorer - это сервис, в котором можно найти новости по запросу и сохранить в личном кабинете.
+
+Проект можно посмотреть [здесь] (www.sektor.news.students.nomoredomains.icu)
+Бэкенд приложения расположен в [этом] (https://github.com/SekToR90/news-explorer-api) репозитории
 
 ### Функциональность
 - Поиск новостей
@@ -28,6 +31,7 @@ $ npm run start
 
 # сборка проекта
 $ npm run build
+```
 
 ##  Планы по доработке проекта
 - Переписать код на TypeScript
